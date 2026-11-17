@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>HANDOFF — Continue the work</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color-scheme:light dark}body{max-width:980px;margin:auto;padding:clamp(16px,4vw,44px);line-height:1.5}header{display:flex;justify-content:space-between;gap:1rem;align-items:center}h1{font-size:clamp(2.5rem,6vw,4rem);margin:.3rem 0}h2{font-size:1.25rem}p{max-width:65ch}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:28px}section{border:1px solid #8886;border-radius:16px;padding:22px}label{display:block;font-weight:600;margin-top:13px}input,textarea,select,button{font:inherit;box-sizing:border-box}input,textarea,select{width:100%;padding:10px;border:1px solid #8889;border-radius:8px;background:transparent;color:inherit}textarea{min-height:85px;resize:vertical}button{border:1px solid #8889;border-radius:9px;padding:11px 16px;cursor:pointer;background:transparent;color:inherit}button.primary{background:#155eef;color:white;border-color:#155eef}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #60a5fa;outline-offset:2px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.83rem;max-height:560px;overflow:auto;background:#8881;padding:12px;border-radius:10px}small,.muted{opacity:.75}#status{min-height:24px}fieldset{border:0;padding:0;margin:12px 0}legend{font-weight:700}@media(max-width:740px){main{grid-template-columns:1fr}}@media(prefers-reduced-motion:no-preference){button{transition:background-color .15s}}
+</style></head><body>
+<header><strong>HANDOFF <small>0.3 preview</small></strong><a href="https://github.com/marinanemukhina-lgtm/handoff">GitHub</a></header>
+<h1>Continue the work.<br>Not the conversation.</h1>
+<p>Make a portable handoff in your browser. No account, server upload or installation. Preserve decisions, obligations and permissions. Nothing changes your project automatically.</p>
+<main><section aria-labelledby="formtitle"><h2 id="formtitle">Create a handoff</h2>
+<form id="handoff">
+<label for="project">Project *</label><input id="project" required maxlength="200" placeholder="Website redesign">
+<label for="intent">Desired outcome *</label><textarea id="intent" required placeholder="What must be achieved and preserved?"></textarea>
+<label for="state">Current state *</label><textarea id="state" required placeholder="What is actually verified? Include source references."></textarea>
+<label for="decisions">Approved decisions (one per line)</label><textarea id="decisions" placeholder="Keep approved design | source link or reference"></textarea>
+<label for="commitments">Commitments (one per line)</label><textarea id="commitments" placeholder="Launch by Friday | owner | open"></textarea>
+<label for="allowed">Allowed actions (one per line)</label><textarea id="allowed" placeholder="Read files&#10;Run tests"></textarea>
+<label for="approval">Actions requiring approval (one per line)</label><textarea id="approval" placeholder="Publish&#10;Change budget&#10;Delete data"></textarea>
+<label for="next">Next action *</label><textarea id="next" required placeholder="What should the recipient do first?"></textarea>
+<label for="acceptance">How to verify completion *</label><textarea id="acceptance" required placeholder="Evidence and acceptance criteria"></textarea>
+<fieldset><legend>Mode</legend><label for="mode">Choose how to use this handoff</label><select id="mode"><option value="continue">CONTINUE — follow the agreed plan</option><option value="review">REVIEW — analyze alternatives only</option><option value="open-field">OPEN FIELD — explore without changes</option></select></fieldset>
+<div class="actions"><button class="primary" type="submit">Generate handoff</button><button type="button" id="load">Load example</button></div>
+</form></section>
+<section aria-labelledby="outtitle"><h2 id="outtitle">Your portable package</h2><p class="muted">Generated locally. Inspect for private data and secrets before sharing. A handoff never grants permission to act.</p>
+<p id="status" role="status" aria-live="polite">Fill the form to begin.</p><div class="actions"><button id="json" type="button" disabled>Download JSON</button><button id="md" type="button" disabled>Download Markdown</button><button id="copy" type="button" disabled>Copy Markdown</button></div><pre id="preview" aria-label="Generated handoff preview">Nothing generated yet.</pre></section></main>
+<footer><p><small>Local-only preview. Structural validation and source verification are separate. <a href="https://github.com/marinanemukhina-lgtm/handoff/blob/main/SECURITY.md">Security notes</a>.</small></p></footer>
+<script type="module" src="./app.js"></script></body></html>
