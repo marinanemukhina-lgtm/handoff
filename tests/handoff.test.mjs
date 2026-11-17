@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+const file='examples/sample.json';
+const run=(command,f=file)=>spawnSync(process.execPath,['bin/handoff.mjs',command,f],{encoding:'utf8'});
+test('valid sample',()=>{const x=run('validate');assert.equal(x.status,0,x.stderr);});
+test('render approved decisions and obligations',()=>{const x=run('render');assert.equal(x.status,0,x.stderr);assert.match(x.stdout,/D1/);assert.match(x.stdout,/C1/);assert.match(x.stdout,/CONTINUE by default/);});
+test('review never changes approved course',()=>{const x=run('review');assert.equal(x.status,0,x.stderr);assert.match(x.stdout,/no execution/);assert.match(x.stdout,/approved decisions/i);});
+test('open field is opt-in',()=>{const x=run('open-field');assert.equal(x.status,0,x.stderr);assert.match(x.stdout,/no execution/);});
+test('invalid sample fails',()=>{const x=run('validate','tests/invalid.json');assert.equal(x.status,1);});
+test('unknown command fails',()=>{assert.equal(run('deploy').status,2);});
