@@ -1,0 +1,39 @@
+{
+  "version": "0.3",
+  "project": "Example brochure site (fictional)",
+  "snapshot": "2026-11-17",
+  "intent": "Finish the already approved website without redesigning it",
+  "state": "Demo only. No real build or source verified.",
+  "decisions": [
+    {
+      "id": "D1",
+      "status": "approved",
+      "statement": "Use the approved layout; no redesign without approval",
+      "source": "fictional example"
+    }
+  ],
+  "commitments": [
+    {
+      "id": "C1",
+      "owner": "Example project owner",
+      "status": "open",
+      "due": null
+    }
+  ],
+  "permissions": {
+    "allowed": [
+      "read files",
+      "run local tests"
+    ],
+    "requires_approval": [
+      "publish",
+      "change budget",
+      "change scope",
+      "delete files"
+    ]
+  },
+  "next": {
+    "action": "Run existing build",
+    "acceptance": "Build exits with code 0 and report evidence"
+  }
+}

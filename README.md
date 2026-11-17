@@ -42,3 +42,17 @@ Developed from the HANDOFF documentation workflow used in NEMUKHINA SYSTEM. This
 ## License
 
 Documentation and templates: [MIT](LICENSE). 
+
+## Continuity core (preview v0.3)
+
+The proposed zero-dependency CLI and automated tests are in the [continuity core pull request](https://github.com/marinanemukhina-lgtm/handoff/pulls). The default behavior is CONTINUE; optional REVIEW and OPEN_FIELD produce analysis only and do not modify approved plans.
+
+```bash
+node bin/handoff.mjs validate examples/sample.json
+node bin/handoff.mjs render examples/sample.json
+node bin/handoff.mjs review examples/sample.json
+node bin/handoff.mjs open-field examples/sample.json
+node --test tests/*.test.mjs
+```
+
+Read [research](docs/RESEARCH.md) and [acceptance limitations](docs/ACCEPTANCE.md). The tool does not enforce third-party permissions or verify source truth.
