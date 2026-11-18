@@ -16,10 +16,17 @@ function download(filename,content,type){
 }
 $('handoff').addEventListener('submit',e=>{
   e.preventDefault();
-  const decisions=lines('decisions').map((s,i)=>{const [statement,source]=pair(s);return {id:'D'+(i+1),status:'approved',statement,source:source||'Unverified — confirm source'};});
-  const commitments=lines('commitments').map((s,i)=>{const [statement,owner,status]=s.split('|').map(x=>x.trim());return {id:'C'+(i+1),statement,owner:owner||'Unassigned',status:status||'unverified'};});
+  current=null;
+  for(const id of ['json','md','copy'])$(id).disabled=true;
+  $('preview').textContent='Nothing generated yet.';
+  const decisions=lines('decisions').map((s,i)=>{const [statement,source]=pair(s);return {id:'D'+(i+1),status:'approved',statement,source};});
+  if(decisions.some(d=>!d.statement||!d.source)){$('status').textContent='Each approved decision needs a statement and a source, separated by |.';return;}
+  const commitments=lines('commitments').map((s,i)=>{const [statement,owner,status]=s.split('|').map(x=>x.trim());return {id:'C'+(i+1),statement,owner,status:status||'unverified'};});
+  if(commitments.some(c=>!c.statement||!c.owner)){$('status').textContent='Each commitment needs a statement and an owner, separated by |.';return;}
   const p={version:'0.3',project:$('project').value.trim(),snapshot:new Date().toISOString().slice(0,10),intent:$('intent').value.trim(),state:$('state').value.trim(),decisions,commitments,permissions:{allowed:lines('allowed'),requires_approval:lines('approval')},next:{action:$('next').value.trim(),acceptance:$('acceptance').value.trim()}};
   if(!p.project||!p.intent||!p.state||!p.next.action||!p.next.acceptance){$('status').textContent='Complete the required fields.';return;}
+  const raw=JSON.stringify(p);
+  if(/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}\b|\bsk-proj-[A-Za-z0-9_-]{20,}\b/.test(raw)){$('status').textContent='Possible credential detected. Remove it before generating.';return;}
   current={p,mode:$('mode').value,md:markdown(p,$('mode').value)};
   $('preview').textContent=current.md;
   $('status').textContent='Generated locally. Review content before sharing; sources are not verified.';
