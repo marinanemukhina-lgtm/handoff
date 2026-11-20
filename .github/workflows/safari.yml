@@ -14,7 +14,7 @@ permissions:
 jobs:
   safari:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 18
     strategy:
       fail-fast: false

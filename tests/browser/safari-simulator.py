@@ -13,19 +13,27 @@ evidence.mkdir(exist_ok=True)
 screenshot = evidence / (device_type + ".png")
 simctl = ["xcrun", "simctl"]
 runtimes = json.loads(subprocess.check_output(simctl + ["list", "devices", "available", "-j"]))["devices"]
-devices = [d for runtime, group in reversed(list(runtimes.items())) if ".iOS-" in runtime
-           for d in group if d["name"].startswith(device_type) and d.get("isAvailable")]
+sdk = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"], text=True).strip()
+runtime = "com.apple.CoreSimulator.SimRuntime.iOS-" + "-".join(sdk.split(".")[:2])
+devices = [d for d in runtimes.get(runtime, [])
+           if d["name"].startswith(device_type) and d.get("isAvailable")]
 if not devices:
-    raise RuntimeError("No available " + device_type + " simulator")
+    raise RuntimeError("No available " + device_type + " simulator for the active Xcode SDK " + sdk)
 device = devices[0]
 udid = device["udid"]
-print("Simulator:", device["name"], udid, flush=True)
+print("Simulator:", device["name"], "iOS/iPadOS", sdk, udid, flush=True)
 if device["state"] == "Shutdown":
     subprocess.run(simctl + ["boot", udid], check=True)
 subprocess.run(simctl + ["bootstatus", udid, "-b"], check=True)
 scanner = evidence.parent / "handoff-screen-text"
 subprocess.run(["xcrun", "swiftc", "tests/browser/screen-text.swift", "-o", scanner], check=True)
-subprocess.run(simctl + ["openurl", udid, site], check=True)
+developer = Path(subprocess.check_output(["xcode-select", "-p"], text=True).strip())
+subprocess.run(["open", "-a", developer / "Applications/Simulator.app", "--args", "-CurrentDeviceUDID", udid], check=True)
+subprocess.run(simctl + ["launch", udid, "com.apple.mobilesafari"], check=False)
+opened = subprocess.run(simctl + ["openurl", udid, site])
+if opened.returncode != 0:
+    # A cold Safari launch can time out before SpringBoard finishes handling the URL.
+    subprocess.run(simctl + ["openurl", udid, site], check=False)
 deadline = time.monotonic() + 120
 while True:
     subprocess.run(simctl + ["io", udid, "screenshot", screenshot], check=True, capture_output=True)
