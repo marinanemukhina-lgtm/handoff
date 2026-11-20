@@ -1,6 +1,11 @@
 name: Check published site in Apple Safari
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/safari.yml'
+      - 'tests/browser/safari-simulator.py'
+      - 'tests/browser/screen-text.swift'
   workflow_run:
     workflows: ["Publish HANDOFF website"]
     types: [completed]
@@ -8,7 +13,7 @@ permissions:
   contents: read
 jobs:
   safari:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: macos-15
     timeout-minutes: 18
     strategy:
@@ -17,10 +22,15 @@ jobs:
         device: [iPhone, iPad]
     steps:
       - uses: actions/checkout@v4
-      - name: Enable Safari automation on the test runner
-        run: sudo safaridriver --enable
       - name: Open the published builder in Mobile Safari
         env:
           HANDOFF_TEST_URL: https://marinanemukhina-lgtm.github.io/handoff/
           DEVICE: ${{ matrix.device }}
         run: python3 tests/browser/safari-simulator.py "$DEVICE"
+      - name: Save the simulator screen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Safari-${{ matrix.device }}
+          path: ${{ runner.temp }}/handoff-safari/*.png
+          if-no-files-found: warn
