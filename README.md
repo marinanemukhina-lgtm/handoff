@@ -8,9 +8,9 @@ HANDOFF is an open, portable format for transferring project context between peo
 
 ## No-install browser builder / Конструктор без установки
 
-Open **[HANDOFF browser builder](https://marinanemukhina-lgtm.github.io/handoff/)** once GitHub Pages is enabled (Settings → Pages → Deploy from branch → main → /docs). Until then, open `docs/index.html` locally in a browser. Enter the project details and download JSON or Markdown. Everything runs locally in the browser; there is no server upload. This interface does not automatically import conversations, validate facts or enforce permissions.
+[Open the HANDOFF builder](https://marinanemukhina-lgtm.github.io/handoff/). Enter the project details, choose a mode, and select **Generate handoff**. Download JSON or Markdown. Generate again after editing the form. To work offline, keep the files in `docs/` together and open `index.html` in a desktop browser. GitHub Pages uses the existing **Publish HANDOFF website** workflow with **GitHub Actions** as the publishing source.
 
-Откройте `docs/index.html` в браузере, заполните поля и скачайте файл передачи. Никакой регистрации, платной подписки или сервера не требуется. Для публичной ссылки необходимо отдельно включить GitHub Pages.
+[Открыть конструктор HANDOFF](https://marinanemukhina-lgtm.github.io/handoff/). Заполните форму, выберите режим и нажмите **Generate handoff**. Скачайте пакет в JSON или Markdown. После правки сформируйте пакет заново. Введённые данные обрабатывает браузер. Проверка источников и полномочий остаётся за получателем.
 
 ## Quick start / Быстрый старт
 
