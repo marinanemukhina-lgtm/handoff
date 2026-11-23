@@ -1,13 +1,35 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>HANDOFF — Continue the work</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark">
+<title>HANDOFF — Transfer Project Context Between People and AI</title>
+<meta name="description" content="Transfer project context between people and AI assistants. Record decisions, sources, permissions and next steps in your browser. Download JSON or Markdown.">
+<link rel="canonical" href="https://marinanemukhina-lgtm.github.io/handoff/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HANDOFF">
+<meta property="og:title" content="HANDOFF — Transfer Project Context Between People and AI">
+<meta property="og:description" content="Transfer project context between people and AI assistants. Record decisions, sources, permissions and next steps in your browser. Download JSON or Markdown.">
+<meta property="og:url" content="https://marinanemukhina-lgtm.github.io/handoff/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://marinanemukhina-lgtm.github.io/handoff/#builder",
+  "name": "HANDOFF",
+  "url": "https://marinanemukhina-lgtm.github.io/handoff/",
+  "description": "Browser-based builder for transferring project context between people and AI assistants. It exports JSON or Markdown.",
+  "browserRequirements": "Requires JavaScript"
+}
+</script>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180">
 <style>
 :root{font-family:system-ui,-apple-system,sans-serif;color-scheme:light dark}body{max-width:980px;margin:auto;padding:clamp(16px,4vw,44px);line-height:1.5}header{display:flex;justify-content:space-between;gap:1rem;align-items:center}h1{font-size:clamp(2.5rem,6vw,4rem);margin:.3rem 0}h2{font-size:1.25rem}p{max-width:65ch}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:28px}section{border:1px solid #8886;border-radius:16px;padding:22px}label{display:block;font-weight:600;margin-top:13px}input,textarea,select,button{font:inherit;box-sizing:border-box}input,textarea,select{width:100%;padding:10px;border:1px solid #8889;border-radius:8px;background:transparent;color:inherit}textarea{min-height:85px;resize:vertical}button{border:1px solid #8889;border-radius:9px;padding:11px 16px;cursor:pointer;background:transparent;color:inherit}button.primary{background:#155eef;color:white;border-color:#155eef}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #60a5fa;outline-offset:2px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.83rem;max-height:560px;overflow:auto;background:#8881;padding:12px;border-radius:10px}small,.muted{opacity:.75}#status{min-height:24px}fieldset{border:0;padding:0;margin:12px 0}legend{font-weight:700}@media(max-width:740px){main{grid-template-columns:1fr}}@media(prefers-reduced-motion:no-preference){button{transition:background-color .15s}}
+#how-it-works{grid-column:1/-1}
 </style></head><body>
 <header><strong>HANDOFF <small>0.3 preview</small></strong><a href="https://github.com/marinanemukhina-lgtm/handoff">GitHub</a></header>
-<h1>Continue the work.<br>Not the conversation.</h1>
-<p>Make a portable handoff in your browser. No account, server upload or installation. Preserve decisions, obligations and permissions. Nothing changes your project automatically.</p>
+<p><strong>Continue the work. Not the conversation.</strong></p>
+<h1>Transfer project context between people and AI</h1>
+<p>Create a handoff document with the current state of a project, approved decisions, sources, permissions and the next action. The browser builds a JSON or Markdown file without an account, installation or upload.</p>
+<p><a href="#handoff">Create a handoff</a> · <a href="#how-it-works">How it works</a> · <a href="#guide-ru" lang="ru">Инструкция по-русски</a></p>
 <main><section aria-labelledby="formtitle"><h2 id="formtitle">Create a handoff</h2>
 <form id="handoff">
 <label for="project">Project *</label><input id="project" required maxlength="200" placeholder="Website redesign">
@@ -23,7 +45,25 @@
 <div class="actions"><button class="primary" type="submit">Generate handoff</button><button type="button" id="load">Load example</button></div>
 </form></section>
 <section aria-labelledby="outtitle"><h2 id="outtitle">Your portable package</h2><p class="muted">Generated locally. Inspect for private data and secrets before sharing. A handoff never grants permission to act.</p>
-<p id="status" role="status" aria-live="polite">Fill the form to begin.</p><div class="actions"><button id="json" type="button" disabled>Download JSON</button><button id="md" type="button" disabled>Download Markdown</button><button id="copy" type="button" disabled>Copy Markdown</button></div><pre id="preview" aria-label="Generated handoff preview">Nothing generated yet.</pre></section></main>
+<p id="status" role="status" aria-live="polite">Fill the form to begin.</p><div class="actions"><button id="json" type="button" disabled>Download JSON</button><button id="md" type="button" disabled>Download Markdown</button><button id="copy" type="button" disabled>Copy Markdown</button></div><pre id="preview" aria-label="Generated handoff preview">Nothing generated yet.</pre></section>
+<section id="how-it-works" aria-labelledby="builder-guide">
+  <h2 id="builder-guide">How to hand a project to a new person or AI assistant</h2>
+  <ol>
+    <li>Record what is already verified, what was decided, where to check it and what still needs approval.</li>
+    <li>Choose CONTINUE for an agreed plan, REVIEW to compare alternatives or OPEN FIELD to explore options. The mode describes the assignment; it does not run actions.</li>
+    <li>Generate the package, check that it contains no secrets or private details, and share Markdown for reading or JSON for tools that accept structured files.</li>
+  </ol>
+  <h3>Will the next assistant see my chats and source files?</h3>
+  <p>HANDOFF does not automatically transfer chat history or source files. Share the document yourself. The recipient still needs access to referenced material and must check facts and permissions before acting.</p>
+  <h3>Can I try it without using a real project?</h3>
+  <p>Choose <strong>Load example</strong> in the form to open a fictional project. Generate a package to see what the recipient would get.</p>
+  <div id="guide-ru" lang="ru">
+    <h2>Как передать контекст проекта коллеге или ИИ</h2>
+    <p>Запишите, что уже проверено, какие решения приняты, на какие источники можно опереться и с чего начать следующему исполнителю. Отдельно укажите действия, для которых нужно согласование.</p>
+    <p>Нажмите <strong lang="en">Generate handoff</strong> и скачайте Markdown для чтения или JSON для инструментов, которые принимают структурированные файлы. Кнопка <strong lang="en">Load example</strong> подставит вымышленный проект для пробы.</p>
+    <p>Конструктор формирует файл в браузере. Он не переносит историю переписки, не открывает доступ к закрытым файлам и не подтверждает достоверность источников. Перед отправкой проверьте, что в документе нет секретов и лишних личных данных.</p>
+  </div>
+</section></main>
 <footer><p><small>Local-only preview. Structural validation and source verification are separate. <a href="https://github.com/marinanemukhina-lgtm/handoff/blob/main/SECURITY.md">Security notes</a>.</small></p></footer>
 <script defer src="./format.js"></script>
 <script defer src="./app.js"></script></body></html>
