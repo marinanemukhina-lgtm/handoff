@@ -62,3 +62,9 @@ node --test tests/*.test.mjs
 ```
 
 Read [research](docs/RESEARCH.md) and [acceptance limitations](docs/ACCEPTANCE.md). The tool does not enforce third-party permissions or verify source truth.
+
+### Verify the public builder / Проверка публичной версии
+
+Run `npm test` to check that metadata and sitemap agree on the published address. When preparing a move, set `HANDOFF_PUBLIC_URL` to the confirmed final HTTPS address; the test fails until all address fields match it. This check does not contact the host.
+
+After deployment, set `HANDOFF_TEST_URL` to the final public address and run `npm run test:browser` with Chromium and WebKit installed. The suite uses fictional data on iPhone and iPad browser profiles and checks local exports in all three modes. A push to `main` changing `docs/` triggers the existing GitHub Pages deployment.
