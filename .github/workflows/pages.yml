@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 concurrency:
@@ -21,6 +22,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      PAGES_ARTIFACT: github-pages-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
@@ -29,8 +32,22 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
+          name: ${{ env.PAGES_ARTIFACT }}
+      - name: Wait for the Pages artifact to become available
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in {1..12}; do
+            count=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=$PAGES_ARTIFACT" --jq '.total_count' 2>/dev/null) || count=0
+            if [ "$count" = 1 ]; then exit 0; fi
+            sleep 5
+          done
+          echo 'Pages artifact is not ready' >&2
+          exit 1
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT }}
   verify-public-site:
     needs: deploy
     runs-on: ubuntu-latest
